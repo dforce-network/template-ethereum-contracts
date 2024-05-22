@@ -2,15 +2,13 @@ import {expect} from "chai";
 import {ethers, deployments, getUnnamedAccounts} from "hardhat";
 import {GreetingsRegistry} from "../typechain-types";
 import {setupUsers} from "./utils";
-import {getContract} from "../utils/utils";
 
 const setup = deployments.createFixture(async () => {
   await deployments.fixture("GreetingsRegistry");
   const contracts = {
-    GreetingsRegistry: await getContract<GreetingsRegistry>(
-      hre,
-      "greetingsRegistry"
-    ),
+    GreetingsRegistry: (await ethers.getContract(
+      "greetingsRegistryNonProxy"
+    )) as GreetingsRegistry,
   };
   const users = await setupUsers(await getUnnamedAccounts(), contracts);
   return {

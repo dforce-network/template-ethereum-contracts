@@ -7,14 +7,12 @@ import {
 } from "hardhat";
 import {IERC20} from "../typechain-types";
 import {setupUser, setupUsers} from "./utils";
-import {getContract} from "../utils/utils";
-import * as hre from "hardhat";
 
 const setup = deployments.createFixture(async () => {
   await deployments.fixture("SimpleERC20");
   const {simpleERC20Beneficiary} = await getNamedAccounts();
   const contracts = {
-    SimpleERC20: await getContract<IERC20>(hre, "simpleERC20"),
+    SimpleERC20: (await ethers.getContract("simpleERC20")) as IERC20,
   };
   const users = await setupUsers(await getUnnamedAccounts(), contracts);
   return {

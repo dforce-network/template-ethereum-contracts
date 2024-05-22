@@ -3,9 +3,7 @@ import {DeployOptions} from "hardhat-deploy/dist/types";
 import {HardhatRuntimeEnvironment} from "hardhat/types";
 import * as readline from "readline/promises";
 
-export async function getContract<
-  ContractType extends ethers.BaseContract = ethers.BaseContract
->(
+export async function getContract(
   hre: HardhatRuntimeEnvironment,
   instance: string,
   signer?: ethers.Signer | string
@@ -17,11 +15,7 @@ export async function getContract<
     signer = await ethers.provider.getSigner(signer);
   }
 
-  return ethers.getContractAt(
-    deployment.abi,
-    deployment.address,
-    signer
-  ) as unknown as ContractType;
+  return ethers.getContractAt(deployment.abi, deployment.address, signer);
 }
 
 export async function deploy(
