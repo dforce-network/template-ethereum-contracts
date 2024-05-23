@@ -59,6 +59,7 @@ export async function deploy(
 
     if (initFunction) {
       options.proxy = {
+        ...options.proxy,
         execute: {
           init: {
             methodName: initFunction, // method to be executed when the proxy is deployed
